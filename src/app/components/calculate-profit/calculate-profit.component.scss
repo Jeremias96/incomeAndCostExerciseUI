@@ -1,0 +1,84 @@
+.page-wrapper {
+  height: 100%;
+}
+
+.main-card {
+  background: #f7f7f7;
+  padding: 20px;
+  min-height: 500px;
+  height: 100%;
+}
+
+.shipment-title {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 20px;
+
+  .label {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .shipment-id {
+    font-size: 18px;
+  }
+}
+
+.form-wrapper {
+  border: 2px solid #2c2c2c;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 16px;
+}
+
+.custom-fieldset {
+  border: 2px solid #2c2c2c;
+  padding: 16px;
+  min-width: 320px;
+
+  legend {
+    width: auto;
+    padding: 0 8px;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+
+  label {
+    font-weight: 600;
+    margin-bottom: 8px;
+  }
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.table-wrapper {
+  border: 2px solid #2c2c2c;
+  overflow: auto;
+}
+
+.custom-table {
+  width: 100%;
+  background: white;
+}
+
+.mat-mdc-header-row {
+  background: #d9d9d9;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  border-right: 1px solid #2c2c2c;
+}

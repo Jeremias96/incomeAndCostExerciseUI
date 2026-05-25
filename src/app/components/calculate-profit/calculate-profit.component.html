@@ -1,0 +1,100 @@
+<div class="page-wrapper">
+  <div class="main-card">
+    <h2 class="shipment-title">
+      <span class="label">Shipment ID</span>
+      <span class="shipment-id">0001</span>
+    </h2>
+    <form
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()"
+      class="form-wrapper"
+    >
+      <fieldset class="custom-fieldset">
+        <legend>Income</legend>
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Income Value
+          </mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="incomeValue"
+          />
+        </mat-form-field>
+      </fieldset>
+      <fieldset class="custom-fieldset">
+        <legend>Costs</legend>
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Cost Value
+          </mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="costValue"
+          />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>
+            Additional Cost
+          </mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="additionalCostValue"
+          />
+        </mat-form-field>
+      </fieldset>
+      <div class="button-container">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="loading"
+        >
+          Calculate
+        </button>
+      </div>
+    </form>
+    <div class="table-wrapper">
+      <table
+        mat-table
+        [dataSource]="calculatedProfitsOrLosses"
+        class="custom-table"
+      >
+        <ng-container matColumnDef="income">
+          <th mat-header-cell *matHeaderCellDef>
+            Income
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item.income.incomeValue }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="cost">
+          <th mat-header-cell *matHeaderCellDef>
+            Costs
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item.cost.costValue + item.cost.additionalCostValue }}
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="calculatedProfitOrLoss">
+          <th mat-header-cell *matHeaderCellDef>
+            Profit / Loss
+          </th>
+          <td mat-cell *matCellDef="let item">
+            {{ item.calculatedProfitOrLoss }}
+          </td>
+        </ng-container>
+        <tr
+          mat-header-row
+          *matHeaderRowDef="displayedColumns"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+        ></tr>
+      </table>
+    </div>
+  </div>
+</div>
