@@ -25,6 +25,4 @@ export class ProfitLossService {
   getAllProfits(): Observable<ProfitLoss[]> {
     return this.http.get<ProfitLoss[]>(this.apiUrl);
   }
-
-  //constructor(private readonly http: HttpClient) {}
 }
