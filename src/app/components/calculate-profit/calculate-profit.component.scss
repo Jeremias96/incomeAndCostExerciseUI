@@ -29,14 +29,9 @@
   border: 2px solid #2c2c2c;
   padding: 20px;
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 24px;
   margin-bottom: 16px;
-}
-
-.income-outcome-title {
-  flex-direction: column;
-  display: flex;
 }
 
 .custom-fieldset {
@@ -55,7 +50,6 @@
 mat-form-field {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
 }
 
 .button-container {
