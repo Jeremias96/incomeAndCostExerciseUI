@@ -1,9 +1,9 @@
 <div class="page-wrapper">
   <div class="main-card">
-    <h2 class="shipment-title">
+    <div class="shipment-title">
       <span class="label">Shipment ID</span>
       <span class="shipment-id">0001</span>
-    </h2>
+    </div>
     <form
       [formGroup]="form"
       (ngSubmit)="onSubmit()"
@@ -59,31 +59,32 @@
     <div class="table-wrapper">
       <table
         mat-table
-        [dataSource]="calculatedProfitsOrLosses"
+        [dataSource]="dataSource"
+        matSort
         class="custom-table"
       >
         <ng-container matColumnDef="income">
-          <th mat-header-cell *matHeaderCellDef>
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
             Income
           </th>
           <td mat-cell *matCellDef="let item">
-            {{ item.income.incomeValue }}
+            {{ item.income.incomeValue | number:'1.2-2'}}
           </td>
         </ng-container>
-        <ng-container matColumnDef="cost">
-          <th mat-header-cell *matHeaderCellDef>
-            Costs
+        <ng-container matColumnDef="totalCosts">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total Costs
           </th>
           <td mat-cell *matCellDef="let item">
-            {{ item.cost.costValue + item.cost.additionalCostValue }}
+            {{ item.cost.costValue + item.cost.additionalCostValue | number:'1.2-2'}}
           </td>
         </ng-container>
-        <ng-container matColumnDef="calculatedProfitOrLoss">
-          <th mat-header-cell *matHeaderCellDef>
-            Profit / Loss
+        <ng-container matColumnDef="profit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            Profit or Loss
           </th>
           <td mat-cell *matCellDef="let item">
-            {{ item.calculatedProfitOrLoss }}
+            {{ item.calculatedProfitOrLoss | number:'1.2-2'}}
           </td>
         </ng-container>
         <tr

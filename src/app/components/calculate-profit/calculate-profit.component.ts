@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
@@ -6,6 +6,9 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatSort } from '@angular/material/sort';
 import { ProfitLossService } from '../../service/profitloss.service';
 import { ProfitLoss } from '../../models/profitloss.model';
 
@@ -18,24 +21,28 @@ import { ProfitLoss } from '../../models/profitloss.model';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    MatTableModule
+    MatTableModule,
+    MatSortModule
   ],
   templateUrl: './calculate-profit.component.html',
   styleUrls: ['./calculate-profit.component.scss']
 })
-export class CalculateProfitComponent implements OnInit {
+export class CalculateProfitComponent implements OnInit, AfterViewInit {
 
   private readonly fb = inject(FormBuilder);
   private readonly profitService = inject(ProfitLossService);
 
   displayedColumns: string[] = [
     'income',
-    'cost',
-    'calculatedProfitOrLoss'
+    'totalCosts',
+    'profit'
   ];
 
-  calculatedProfitsOrLosses: ProfitLoss[] = [];
+  dataSource = new MatTableDataSource<ProfitLoss>([]);
   loading = false;
+
+  @ViewChild(MatSort)
+  sort!: MatSort;
 
   form: FormGroup = this.fb.group({
     incomeValue: [
@@ -49,7 +56,7 @@ export class CalculateProfitComponent implements OnInit {
     ],
 
     additionalCostValue: [
-      0,
+      null,
       [Validators.required, Validators.min(0)]
     ]
   });
@@ -58,12 +65,43 @@ export class CalculateProfitComponent implements OnInit {
     this.loadProfits();
   }
 
+  ngAfterViewInit(): void {
+
+  this.dataSource.sort = this.sort;
+
+  this.dataSource.sortingDataAccessor = (
+    item: ProfitLoss,
+    property: string
+  ): string | number => {
+
+    switch (property) {
+
+      case 'income':
+        return item.income.incomeValue;
+
+      case 'totalCosts':
+        return (
+          item.cost.costValue
+          +
+          item.cost.additionalCostValue
+        );
+
+      case 'profit':
+        return item.calculatedProfitOrLoss;
+
+      default:
+        return item[property as keyof ProfitLoss] as number;
+    }
+  };
+}
+
   loadProfits(): void {
     this.profitService
       .getAllProfits()
       .subscribe({
         next: (profits) => {
-          this.calculatedProfitsOrLosses = profits;
+          this.dataSource.data = profits;
+          this.dataSource.sort = this.sort;
         },
         error: (error) => {
           console.error(error);
@@ -84,11 +122,7 @@ export class CalculateProfitComponent implements OnInit {
       .subscribe({
         next: () => {
           this.loadProfits();
-
-          this.form.reset({
-            additionalCostValue: 0
-          });
-
+          this.form.reset();
           this.loading = false;
         },
 
