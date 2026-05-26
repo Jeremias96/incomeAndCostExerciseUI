@@ -34,6 +34,11 @@
   margin-bottom: 16px;
 }
 
+.income-outcome-title {
+  flex-direction: column;
+  display: flex;
+}
+
 .custom-fieldset {
   border: 2px solid #2c2c2c;
   padding: 16px;
@@ -47,15 +52,10 @@
   }
 }
 
-.form-group {
+mat-form-field {
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
-
-  label {
-    font-weight: 600;
-    margin-bottom: 8px;
-  }
 }
 
 .button-container {
@@ -66,19 +66,32 @@
 
 .table-wrapper {
   border: 2px solid #2c2c2c;
-  overflow: auto;
+  background: white;
+
+  max-height: 30vh;
+  overflow-y: auto;
 }
 
 .custom-table {
   width: 100%;
-  background: white;
+  border-collapse: collapse;
 }
 
 .mat-mdc-header-row {
   background: #d9d9d9;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  height: 36px;
 }
 
 .mat-mdc-header-cell,
 .mat-mdc-cell {
   border-right: 1px solid #2c2c2c;
+  padding: 8px;
+  font-size: 14px;
+}
+
+.mat-mdc-row {
+  height: 36px;
 }
